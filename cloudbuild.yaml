@@ -12,7 +12,7 @@ steps:
         "build",
         "-t",
         # "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
-        "asdf:${SHORT_SHA}"
+        "asdf:${SHORT_SHA}",
         # '--file=Dockerfile-base'
         ".",
       ]
@@ -21,19 +21,17 @@ steps:
   # [START cloudbuild_python_push_yaml]
   # Docker push to Google Artifact Registry
   - name: "gcr.io/cloud-builders/docker"
-    args:
-      [
+    args: [
         "push",
         # "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
-        "asdf"
+        "asdf",
       ]
   # [END cloudbuild_python_push_yaml]
 
   # [START cloudbuild_python_deploy_yaml]
   # Deploy to Cloud Run
   - name: google/cloud-sdk
-    args:
-      [
+    args: [
         "gcloud",
         "run",
         "deploy",
