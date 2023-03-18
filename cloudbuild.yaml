@@ -8,11 +8,12 @@ steps:
   # [START cloudbuild_python_image_yaml]
   # Docker Build
   - name: "gcr.io/cloud-builders/docker"
-    args:
-      [
+    args: [
         "build",
         "-t",
-        "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
+        # "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
+        "asdf:${SHORT_SHA}"
+        # '--file=Dockerfile-base'
         ".",
       ]
   # [END cloudbuild_python_image_yaml]
@@ -23,7 +24,8 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
+        # "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
+        "asdf"
       ]
   # [END cloudbuild_python_push_yaml]
 
@@ -36,7 +38,8 @@ steps:
         "run",
         "deploy",
         "helloworld-${SHORT_SHA}",
-        "--image=us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
+        "--image=asdf",
+        # "--image=us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
         "--region",
         "europe-westb",
         "--platform",
