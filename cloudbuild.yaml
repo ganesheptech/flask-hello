@@ -12,7 +12,7 @@ steps:
       [
         "build",
         "-t",
-        "us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/flask-hello:${SHORT_SHA}",
+        "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
         ".",
       ]
   # [END cloudbuild_python_image_yaml]
@@ -23,7 +23,7 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/flask-hello:${SHORT_SHA}",
+        "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
       ]
   # [END cloudbuild_python_push_yaml]
 
@@ -36,7 +36,7 @@ steps:
         "run",
         "deploy",
         "helloworld-${SHORT_SHA}",
-        "--image=us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/flask-hello:${SHORT_SHA}",
+        "--image=us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
         "--region",
         "europe-westb",
         "--platform",
@@ -47,14 +47,14 @@ steps:
 
 # [START cloudbuild_python_logs_yaml]
 # Save test logs to Google Cloud Storage
-artifacts:
-  objects:
-    location: gs://${_BUCKET_NAME}/
-    paths:
-      - ${SHORT_SHA}_test_log.xml
+# artifacts:
+#   objects:
+#     location: gs://${_BUCKET_NAME}/
+#     paths:
+#       - ${SHORT_SHA}_test_log.xml
 # [END cloudbuild_python_logs_yaml]
 # Store images in Google Artifact Registry
 images:
-  - us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/flask-hello:${SHORT_SHA}
+  - us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}
   # TODO Address
 # [END cloudbuild_python_yaml]
