@@ -1,32 +1,13 @@
 steps:
-  # Install dependencies
-  - name: python
-    entrypoint: pip
-    args: ["install", "-r", "requirements.txt", "--user"]
-  # [END cloudbuild_python_dependencies_yaml]
-
-  # [START cloudbuild_python_image_yaml]
-  # Docker Build
+  # Build the Flask app Docker image
   - name: "gcr.io/cloud-builders/docker"
-    args: [
-        "build",
-        "-t",
-        # "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
-        "asdf:${SHORT_SHA}",
-        # '--file=Dockerfile-base'
-        ".",
-      ]
-  # [END cloudbuild_python_image_yaml]
+    # args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA', '.']
+    args: ["build", "-t", "asdf", "."]
 
-  # [START cloudbuild_python_push_yaml]
-  # Docker push to Google Artifact Registry
+  # Push the Flask app Docker image to Container Registry
   - name: "gcr.io/cloud-builders/docker"
-    args: [
-        "push",
-        # "us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
-        "asdf",
-      ]
-  # [END cloudbuild_python_push_yaml]
+    # args: ["push", "gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA"]
+    args: ["push", "asdf"]
 
   # [START cloudbuild_python_deploy_yaml]
   # Deploy to Cloud Run
@@ -35,7 +16,7 @@ steps:
         "gcloud",
         "run",
         "deploy",
-        "helloworld-${SHORT_SHA}",
+        "flaskhello",
         "--image=asdf",
         # "--image=us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}",
         "--region",
@@ -56,6 +37,7 @@ steps:
 # [END cloudbuild_python_logs_yaml]
 # Store images in Google Artifact Registry
 images:
+  # - us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}
   - us-central1-docker.pkg.dev/${PROJECT_ID}/flask-hello:${SHORT_SHA}
   # TODO Address
 # [END cloudbuild_python_yaml]
